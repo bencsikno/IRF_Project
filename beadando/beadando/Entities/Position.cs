@@ -17,6 +17,11 @@ namespace beadando.Entities
 
     public class Players
     { 
-            
+        public string Nev { get; set; }
+        public Position Position { get; set; }
+        public double Perc { get; set; }
+        public double PontAtlag { get; set; }
+        public double DobottPerPerc { get; set; }
+
     }
 }
