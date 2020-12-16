@@ -64,10 +64,10 @@ namespace beadando
         private void button1_Click(object sender, EventArgs e)
         {
             copyAlltoClipboard();
-            Microsoft.Office.Interop.Excel.Application xlexcel;
-            Microsoft.Office.Interop.Excel.Workbook xlWorkBook;
-            Microsoft.Office.Interop.Excel.Worksheet xlWorkSheet;
-            object misValue = System.Reflection.Missing.Value;
+            Excel.Application xlexcel;
+            Excel.Workbook xlWorkBook;
+            Excel.Worksheet xlWorkSheet;
+            object misValue = Missing.Value;
             xlexcel = new Excel.Application();
             xlexcel.Visible = true;
             xlWorkBook = xlexcel.Workbooks.Add(misValue);
@@ -82,6 +82,8 @@ namespace beadando
 
             Formazas(xlWorkSheet);
             JatekosMinoseg(xlWorkSheet);
+
+            Application.Exit();
 
 
         }
@@ -142,6 +144,7 @@ namespace beadando
             Excel.Range totalRange = xlWorkSheet.get_Range("A2", "E" + lastsor.Row);
 
             totalRange.Sort(totalRange.Columns[5], Excel.XlSortOrder.xlDescending);
+
 
 
         }
