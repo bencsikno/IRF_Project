@@ -27,17 +27,8 @@ namespace beadando
             Jatekosok = GetPlayers(AppDomain.CurrentDomain.BaseDirectory + @"\jatekosadatok\nbajatekosok.csv");
             dataGridView1.DataSource = Jatekosok.ToList();
            
-
-
         }
-        private void copyAlltoClipboard()
-        {
-            dataGridView1.SelectAll();
-            DataObject dataObj = dataGridView1.GetClipboardContent();
-            if (dataObj != null)
-                Clipboard.SetDataObject(dataObj);
-        }
-       
+              
 
         public List<Players> GetPlayers(string csvpath)
         {
@@ -59,6 +50,42 @@ namespace beadando
 
                 return players;
             }
+        }
+
+        private void Szures_Click(object sender, EventArgs e)
+        {
+            List<Players> Filteredplayers = new List<Players>();
+
+            int min = (int)numericUpDown1.Value;
+            string pozi = "";
+            if (comboBox1.SelectedItem != null)
+            {
+                pozi = comboBox1.SelectedItem.ToString();
+            }
+
+
+            //Debug.WriteLine(pozi);
+            //Debug.WriteLine(Position.Erőcsatár.ToString());
+            for (int i = 0; i < Jatekosok.Count; i++)
+            {
+                if (Jatekosok[i].Perc >= min)
+                {
+                    if ((pozi != "") && (Jatekosok[i].Position.ToString() == pozi))
+                    {
+                        Filteredplayers.Add(Jatekosok[i]);
+                    }
+                    else if (pozi == "")
+                    {
+                        Filteredplayers.Add(Jatekosok[i]);
+                    }
+
+
+
+
+                }
+            }
+
+            dataGridView1.DataSource = Filteredplayers.ToList();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -86,6 +113,14 @@ namespace beadando
             Application.Exit();
 
 
+        }
+
+        private void copyAlltoClipboard()
+        {
+            dataGridView1.SelectAll();
+            DataObject dataObj = dataGridView1.GetClipboardContent();
+            if (dataObj != null)
+                Clipboard.SetDataObject(dataObj);
         }
         private void RemoveColoumn(Excel.Worksheet xlWorkSheet, string coloumnname) 
         {
@@ -149,40 +184,6 @@ namespace beadando
 
         }
 
-        private void Szures_Click(object sender, EventArgs e)
-        {
-            List<Players> Filteredplayers = new List<Players>();
-
-            int min = (int)numericUpDown1.Value;
-            string pozi = ""; 
-            if (comboBox1.SelectedItem != null)
-            {
-                pozi = comboBox1.SelectedItem.ToString();
-            }
-                
-
-            //Debug.WriteLine(pozi);
-            //Debug.WriteLine(Position.Erőcsatár.ToString());
-            for (int i = 0; i < Jatekosok.Count; i++)
-            {
-                if (Jatekosok[i].Perc>=min)
-                {
-                    if ((pozi!="") && (Jatekosok[i].Position.ToString() == pozi) )
-                    {
-                        Filteredplayers.Add(Jatekosok[i]);
-                    }
-                    else if (pozi=="")
-                    {
-                        Filteredplayers.Add(Jatekosok[i]);
-                    }                 
-                     
-                    
-                   
-
-                }
-            }                      
-
-            dataGridView1.DataSource = Filteredplayers.ToList();
-        }
+        
     }
 }
