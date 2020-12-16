@@ -11,83 +11,30 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
 using Excel = Microsoft.Office.Interop.Excel;
-
+using System.Diagnostics;
 
 namespace beadando
 {
     public partial class Form1 : Form
     {
-        List<Players> Jatekosok = new List<Players>();
-
-
-        Excel.Application xlApp;
-        Excel.Workbook xlWB;
-        Excel.Worksheet xlSheet;
+        List<Players> Jatekosok = new List<Players>();        
         public Form1()
         {
             InitializeComponent();
             Jatekosok = GetPlayers(AppDomain.CurrentDomain.BaseDirectory + @"\jatekosadatok\nbajatekosok.csv");
             dataGridView1.DataSource = Jatekosok.ToList();
-            CreateExcel();
+           
 
-            CreateTable();
 
         }
-
-        private static void CreateTable()
+        private void copyAlltoClipboard()
         {
-            string[] headers = new string[]
-            {
-                "Név",
-                "Pozíció",
-                "Perc",
-                "Pontátlag",
-                "Percenként dobott pontátlag"
-            };
-            for (int i = 0; i < 290; i++)
-            {
-                xlSheet.Cells[1, 1] = headers[0];
-                object[,] values = new object[, headers.Length];
-            }
-            int counter = 0;
-            foreach (Players f in Jatekosok)
-            {
-                values[counter, 0] = f.Code;
-                // ...
-                values[counter, 8] = "";
-                counter++;
-            }
+            dataGridView1.SelectAll();
+            DataObject dataObj = dataGridView1.GetClipboardContent();
+            if (dataObj != null)
+                Clipboard.SetDataObject(dataObj);
         }
-
-        private void CreateExcel()
-        {
-            try
-            {
-
-                xlApp = new Excel.Application();
-
-                xlWB = xlApp.Workbooks.Add(Missing.Value);
-
-                xlSheet = xlWB.ActiveSheet;
-
-
-                CreateTable();
-
-
-                xlApp.Visible = true;
-                xlApp.UserControl = true;
-            }
-            catch (Exception ex)
-            {
-                string errMsg = string.Format("Error: {0}\nLine: {1}", ex.Message, ex.Source);
-                MessageBox.Show(errMsg, "Error");
-
-                xlWB.Close(false, Type.Missing, Type.Missing);
-                xlApp.Quit();
-                xlWB = null;
-                xlApp = null;
-            }
-        }
+       
 
         public List<Players> GetPlayers(string csvpath)
         {
@@ -111,14 +58,56 @@ namespace beadando
             }
         }
 
-        
+        private void button1_Click(object sender, EventArgs e)
+        {
+            copyAlltoClipboard();
+            Microsoft.Office.Interop.Excel.Application xlexcel;
+            Microsoft.Office.Interop.Excel.Workbook xlWorkBook;
+            Microsoft.Office.Interop.Excel.Worksheet xlWorkSheet;
+            object misValue = System.Reflection.Missing.Value;
+            xlexcel = new Excel.Application();
+            xlexcel.Visible = true;
+            xlWorkBook = xlexcel.Workbooks.Add(misValue);
+            xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+            Excel.Range CR = (Excel.Range)xlWorkSheet.Cells[1, 1];
+            CR.Select();
+            xlWorkSheet.PasteSpecial(CR, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true);
+        }
 
+        private void Szures_Click(object sender, EventArgs e)
+        {
+            List<Players> Filteredplayers = new List<Players>();
 
+            int min = (int)numericUpDown1.Value;
+            string pozi = ""; 
+            if (comboBox1.SelectedItem != null)
+            {
+                pozi = comboBox1.SelectedItem.ToString();
+            }
+                
 
+            //Debug.WriteLine(pozi);
+            //Debug.WriteLine(Position.Erőcsatár.ToString());
+            for (int i = 0; i < Jatekosok.Count; i++)
+            {
+                if (Jatekosok[i].Perc>=min)
+                {
+                    if ((pozi!="") && (Jatekosok[i].Position.ToString() == pozi) )
+                    {
+                        Filteredplayers.Add(Jatekosok[i]);
+                    }
+                    else if (pozi=="")
+                    {
+                        Filteredplayers.Add(Jatekosok[i]);
+                    }                 
+                     
+                    
+                   
 
+                }
+            }                      
 
-
-
-
+            dataGridView1.DataSource = Filteredplayers.ToList();
+        }
     }
 }

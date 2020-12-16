@@ -32,6 +32,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.Szures = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -67,18 +70,55 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(166, 7);
+            this.button1.Location = new System.Drawing.Point(643, 207);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(145, 23);
             this.button1.TabIndex = 4;
-            this.button1.Text = "Szelektálás";
+            this.button1.Text = "Excelbe exportálás";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(85, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Pozíció választó";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Irányító",
+            "Bedobó",
+            "Kiscsatár",
+            "Erőcsatár",
+            "Center"});
+            this.comboBox1.Location = new System.Drawing.Point(103, 38);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 6;
+            // 
+            // Szures
+            // 
+            this.Szures.Location = new System.Drawing.Point(240, 36);
+            this.Szures.Name = "Szures";
+            this.Szures.Size = new System.Drawing.Size(75, 23);
+            this.Szures.TabIndex = 7;
+            this.Szures.Text = "Szűrés";
+            this.Szures.UseVisualStyleBackColor = true;
+            this.Szures.Click += new System.EventHandler(this.Szures_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.Szures);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label1);
@@ -98,6 +138,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button Szures;
     }
 }
 

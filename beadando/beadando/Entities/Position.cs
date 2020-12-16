@@ -16,7 +16,8 @@ namespace beadando.Entities
     }
 
     public class Players
-    { 
+    {
+        //public static int Count { get; internal set; }
         public string Nev { get; set; }
         public Position Position { get; set; }
         public double Perc { get; set; }
